@@ -25,18 +25,19 @@ function ImageGallery({ query }) {
       return;
     }
 
-    setStatus('pending');
     setPage(1);
 
+    setStatus('pending');
+
     try {
-      apiImages(query, page).then(query => {
+      apiImages(query, 1).then(query => {
         if (!query.hits.length) {
           setStatus('idle');
           toast.error('Данные по Вашему запросу отсутствуют :(');
         } else {
-          setStatus('resolved');
           setPage(1);
           setItems(query.hits);
+          setStatus('resolved');
         }
       });
     } catch (error) {
@@ -56,6 +57,7 @@ function ImageGallery({ query }) {
       }
     }
   }, [page]);
+
   const incrementPage = () => {
     setPage(prevState => prevState + 1);
   };
